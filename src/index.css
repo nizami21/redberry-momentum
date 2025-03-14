@@ -1,0 +1,18 @@
+@import "tailwindcss";
+
+@font-face {
+    font-family: 'firaGo';
+    src: url(./assets/fonts/FiraGO-Regular.ttf) format('ttf');
+}
+@font-face {
+    font-family: 'fredokaOne';
+    src: url(./assets//fonts/FredokaOne-Regular.ttf);
+}
+
+@theme {
+    --font-firaGO: 'firaGo', sans-serif;
+    --font-fredokaOne: 'fredokaOne', sans-serif;
+    --color-purple: #8338EC;
+    --color-purple-light: #B588F4;
+    --color-ourBlack: #212529;
+}
