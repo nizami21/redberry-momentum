@@ -7,9 +7,10 @@ const API_URL = 'https://momentum.redberryinternship.ge/api';
 const axiosInstance = axios.create({
     baseURL: API_URL,
     timeout: 3000,
-    headers: { 
+    headers: {
+        'Content-Type': 'application/json',
         Accept: 'application/json',
-        'Authorization': `Bearer ${API_KEY}`
+        Authorization: `Bearer ${API_KEY}`
     }
 });
 

@@ -34,9 +34,9 @@ export const APIProvider = ({ children }) => {
         fetchData
     }
     return (
-        <APIContext.Provider value={values}>
+        <APIContext value={values}>
             {children}
-        </APIContext.Provider>
+        </APIContext>
     );
 };
 

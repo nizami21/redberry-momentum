@@ -5,7 +5,7 @@ import TaskRow from "@/components/TaskRow";
 
 const TaskPage = () => {
     const { statuses, departments, priorities, tasks } = useAPI();
-    console.log(tasks);
+    console.log(departments);
     return (
         <div>
             <Header />
