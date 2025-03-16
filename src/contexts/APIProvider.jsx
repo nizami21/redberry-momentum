@@ -7,22 +7,25 @@ export const APIProvider = ({ children }) => {
     const [statuses, setStatuses] = useState([]);
     const [priorities, setPriorities] = useState([]);
     const [departments, setDepartments] = useState([]);
+    const [employees, setEmployees] = useState([])
     const [tasks, setTasks] = useState([]);
 
     useEffect(() => {
         fetchData();
     }, [])
     const fetchData = async () => {
-        const [statuses, priorities, departments, tasks] = await Promise.all([
+        const [statuses, priorities, departments, tasks, employees] = await Promise.all([
             axiosInstance.get('/statuses'),
             axiosInstance.get('/priorities'),
             axiosInstance.get('/departments'),
-            axiosInstance.get('/tasks')
+            axiosInstance.get('/tasks'),
+            axiosInstance.get('/employees')
         ])
         setStatuses(statuses.data);
         setPriorities(priorities.data);
         setDepartments(departments.data);
         setTasks(tasks.data);
+        setEmployees(employees.data);
     }
 
 
@@ -31,6 +34,7 @@ export const APIProvider = ({ children }) => {
         priorities,
         departments,
         tasks,
+        employees,
         fetchData
     }
     return (

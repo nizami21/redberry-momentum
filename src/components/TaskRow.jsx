@@ -9,7 +9,7 @@ const TaskRow = ({ status, tasks }) => {
 
 
     return (
-        <div className="flex flex-col w-[380px] gap-[30px]">
+        <div className="flex flex-col select-none w-[380px] gap-[30px]">
             <StatusName status={status} color={getStatusColor(status)} />
             <div className="mt-4 flex flex-col gap-4">
                 {filteredTasks.map(task => (

@@ -35,7 +35,7 @@ const TaskCard = ({ task, color }) => {
     };
 
     return (
-        <div className={`flex flex-col rounded-2xl font-firaGO border-[1px] p-5 w-full gap-[28px]`} style={{ borderColor: color }}>
+        <div className={`flex select-none flex-col rounded-2xl font-firaGO border-[1px] p-5 w-full gap-[28px]`} style={{ borderColor: color }}>
             {/* Priority */}
 
             <div className="flex justify-between items-center">
