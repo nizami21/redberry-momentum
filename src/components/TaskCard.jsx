@@ -1,18 +1,9 @@
+import { getDepartmentColor } from '@/hooks/getDepartmentColor';
+import { getPriorityColor } from '@/hooks/getPriorityColor';
 import React from 'react';
 
 const Priority = ({ priority, color }) => {
-    const getPriorityColor = (id) => {
-        switch (id) {
-            case 1:
-                return '#08A508';
-            case 2:
-                return '#FFBE0B';
-            case 3:
-                return '#FA4D4D';
-            default:
-                return '#08A508';
-        }
-    }
+
     return (
         <div className="flex items-center h-[26px] rounded-[4px] p-1 gap-1 border-[1px]" style={{ borderColor: getPriorityColor(priority.id), color: color }}>
             <img src={priority.icon} alt={priority.name} />
@@ -21,28 +12,7 @@ const Priority = ({ priority, color }) => {
     )
 }
 const Department = ({ department }) => {
-    const getDepartmentColor = (id) => {
-        switch (id) {
-            case 1:
-            case 2:
-            case 3:
-            case 5:
-                return '#89B6FF';
-                break;
-            case 4:
-                return '#FD9A6A';
-                break;
-            case 6:
-                return '#FFD86D';
-                break;
-            case 7:
-                return '#FF66A8';
-                break;
-            default:
-                return '#89B6FF';
-                break;
-        }
-    }
+
     const shortenDepartmentName = (name) => {
         if (name.length <= 10) {
             return name;
@@ -89,7 +59,7 @@ const TaskCard = ({ task, color }) => {
                     <div className='rounded-full bg-gray-400 w-[31px] h-[31px]'></div>
                 </div>
                 <div className='flex gap-1'>
-                    <img src="/src/assets/icons/Comments.svg" alt="coment icon" />
+                    <img src="/src/assets/img/Comments.svg" alt="coment icon" />
                     <span className='text-ourBlack text-sm font-normal'>0</span>
                 </div>
             </div>
