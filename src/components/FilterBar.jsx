@@ -1,10 +1,18 @@
 import DropdownIcon from "@/assets/icons/DropdownIcon";
 import { useState } from "react";
 import { useAPI } from "@/contexts/APIProvider";
+import MultiSelectDropdown from "./MultiSelectDropdown";
+import SingleSelectDropdown from "./SingleSelectDropdown";
 
 const FilterBar = () => {
     const { employees, priorities, departments } = useAPI()
     const [selectedDropdown, setSelectedDropdown] = useState('');
+    const [selectedFilters, setSelectedFilters] = useState({
+        departments: [],
+        priorities: [],
+        employees: []
+    })
+
     const handleDropdownClick = (dropdown) => {
         if (selectedDropdown == dropdown) {
             setSelectedDropdown('')
@@ -13,32 +21,132 @@ const FilterBar = () => {
         }
     };
 
-    return (
-        <div className="font-firaGO border-[1px] border-[#DEE2E6] rounded-[10px] w-[688px] h-[44px] mb-[80px]">
-            <div className="flex justify-between items-center h-full">
-                <div
-                    onClick={() => handleDropdownClick('department')}
-                    className={`w-[200px] py-2.5 px-[18px] flex items-center justify-center gap-2 select-none cursor-pointer ${selectedDropdown === 'department' ? 'text-purple' : 'text-ourBlack-gray'}`}
-                >
-                    <span className="text-base">დეპარტამენტი</span>
-                    <DropdownIcon color={selectedDropdown === 'department' ? '#8338EC' : '#0D0F10'} />
-                </div>
-                <div
-                    onClick={() => handleDropdownClick('priority')}
-                    className={`w-[200px] py-2.5 px-[18px] flex items-center justify-center gap-2 select-none cursor-pointer ${selectedDropdown === 'priority' ? 'text-purple' : 'text-ourBlack-gray'}`}
-                >
-                    <span className="text-base">პრიორიტეტი</span>
-                    <DropdownIcon color={selectedDropdown === 'priority' ? '#8338EC' : '#0D0F10'} />
-                </div>
-                <div
-                    onClick={() => handleDropdownClick('employee')}
-                    className={`w-[200px] py-2.5 px-[18px] flex items-center justify-center gap-2 select-none cursor-pointer ${selectedDropdown === 'employee' ? 'text-purple' : 'text-ourBlack-gray'}`}
-                >
-                    <span className="text-base">თანამშრომელი</span>
-                    <DropdownIcon color={selectedDropdown === 'employee' ? '#8338EC' : '#0D0F10'} />
-                </div>
-            </div>
+    const handleRemoveFilter = (filterType, filterId) => {
+        setSelectedFilters({
+            ...selectedFilters,
+            [filterType]: selectedFilters[filterType].filter(item => item.id !== filterId)
+        });
+    };
 
+    const handleRemoveEmployee = () => {
+        setSelectedFilters({
+            ...selectedFilters,
+            employees: []
+        });
+    };
+    const handleClearFilters = () => {
+        setSelectedFilters({
+            departments: [],
+            priorities: [],
+            employees: []
+        });
+    }
+    // Check if any filters are selected
+    const hasFilters = selectedFilters.departments.length > 0 ||
+        selectedFilters.priorities.length > 0 ||
+        selectedFilters.employees.length > 0;
+
+    return (
+        <div className="font-firaGO z-50 mb-6">
+            <div className="border-[1px] border-[#DEE2E6] rounded-[10px] w-[688px] h-[44px]">
+                <div className="flex justify-between items-center h-full">
+                    <div
+                        onClick={() => handleDropdownClick('department')}
+                        className={`w-[200px] py-2.5 px-[18px] flex items-center justify-center gap-2 select-none cursor-pointer ${selectedDropdown === 'department' ? 'text-purple' : 'text-ourBlack-gray'}`}
+                    >
+                        <span className="text-base">დეპარტამენტი</span>
+                        <DropdownIcon isOpen={selectedDropdown === 'department'} color={selectedDropdown === 'department' ? '#8338EC' : '#0D0F10'} />
+                    </div>
+                    <div
+                        onClick={() => handleDropdownClick('priority')}
+                        className={`w-[200px] py-2.5 px-[18px] flex items-center justify-center gap-2 select-none cursor-pointer ${selectedDropdown === 'priority' ? 'text-purple' : 'text-ourBlack-gray'}`}
+                    >
+                        <span className="text-base">პრიორიტეტი</span>
+                        <DropdownIcon isOpen={selectedDropdown === 'priority'} color={selectedDropdown === 'priority' ? '#8338EC' : '#0D0F10'} />
+                    </div>
+                    <div
+                        onClick={() => handleDropdownClick('employee')}
+                        className={`w-[200px] py-2.5 px-[18px] flex items-center justify-center gap-2 select-none cursor-pointer ${selectedDropdown === 'employee' ? 'text-purple' : 'text-ourBlack-gray'}`}
+                    >
+                        <span className="text-base">თანამშრომელი</span>
+                        <DropdownIcon isOpen={selectedDropdown === 'employee'} color={selectedDropdown === 'employee' ? '#8338EC' : '#0D0F10'} />
+                    </div>
+                </div>
+                <MultiSelectDropdown
+                    options={departments}
+                    isOpen={selectedDropdown == 'department'}
+                    selectedOptions={selectedFilters.departments}
+                    onClose={() => setSelectedDropdown('')}
+                    onSelect={(options) => setSelectedFilters({ ...selectedFilters, departments: options })}
+                />
+                <MultiSelectDropdown
+                    options={priorities}
+                    isOpen={selectedDropdown == 'priority'}
+                    selectedOptions={selectedFilters.priorities}
+                    onClose={() => setSelectedDropdown('')}
+                    onSelect={(options) => setSelectedFilters({ ...selectedFilters, priorities: options })}
+                />
+                <SingleSelectDropdown
+                    options={employees}
+                    selectedOptions={selectedFilters.employees}
+                    isOpen={selectedDropdown == 'employee'}
+                    onClose={() => setSelectedDropdown('')}
+                    onSelect={(option) => setSelectedFilters({ ...selectedFilters, employees: [option] })}
+                />
+            </div>
+            <div className="h-[80px] w-[90%] flex items-center justify-between">
+                {hasFilters && (
+                    <div className="flex flex-wrap gap-2 items-center mt-4">
+                        {selectedFilters.departments.map(department => (
+                            <div
+                                key={`dept-${department.id}`}
+                                className="flex items-center gap-1 rounded-[43px] py-1.5 text-ourBlack-light px-2.5 border-[1px] border-[#CED4DA] text-sm font-normal"
+                            >
+                                <span className="text-sm">{department.name}</span>
+                                <button
+                                    onClick={() => handleRemoveFilter('departments', department.id)}
+                                    className="text-gray-500 hover:text-gray-700"
+                                    aria-label="Remove filter"
+                                >
+                                    ×
+                                </button>
+                            </div>
+                        ))}
+
+                        {selectedFilters.priorities.map(priority => (
+                            <div
+                                key={`priority-${priority.id}`}
+                                className="flex items-center gap-1 rounded-[43px] py-1.5 text-ourBlack-light px-2.5 border-[1px] border-[#CED4DA] text-sm font-normal"
+                            >
+                                <span className="text-sm">{priority.name}</span>
+                                <button
+                                    onClick={() => handleRemoveFilter('priorities', priority.id)}
+                                    className="text-gray-500 hover:text-gray-700"
+                                    aria-label="Remove filter"
+                                >
+                                    ×
+                                </button>
+                            </div>
+                        ))}
+
+                        {selectedFilters.employees.length > 0 && selectedFilters.employees[0] && (
+                            <div
+                                className="flex items-center gap-1 rounded-[43px] py-1.5 text-ourBlack-light px-2.5 border-[1px] border-[#CED4DA] text-sm font-normal"
+                            >
+                                <span className="text-sm">{selectedFilters.employees[0].name}</span>
+                                <button
+                                    onClick={handleRemoveEmployee}
+                                    className="text-gray-500 hover:text-gray-700"
+                                    aria-label="Remove filter"
+                                >
+                                    ×
+                                </button>
+                            </div>
+                        )}
+                        <span className="text-sm text-ourBlack-light font-normal cursor-pointer" onClick={handleClearFilters}>გასუფთავება</span>
+                    </div>
+                )}
+            </div>
         </div>
     );
 };
