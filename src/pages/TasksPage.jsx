@@ -3,9 +3,11 @@ import Header from "/src/components/Header";
 import { motion } from 'framer-motion';
 import FilterBar from "@/components/FilterBar";
 import TaskRow from "@/components/TaskRow";
+import { useFilter } from "@/contexts/FilterProvider";
 
 const TaskPage = () => {
     const { statuses, departments, priorities, tasks } = useAPI();
+    const { selectedFilters } = useFilter();
 
     const containerVariants = {
         hidden: { opacity: 0 },
