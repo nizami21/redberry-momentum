@@ -1,4 +1,4 @@
-import { createContext, useContext, useState } from 'react';
+import { createContext, useContext, useEffect, useState } from 'react';
 import { useAPI } from './APIProvider';
 
 const FilterContext = createContext();
@@ -10,7 +10,7 @@ export const useFilter = () => {
     }
     return context;
 }
-//TODO: add filter functionality to the FilterProvider
+
 export const FilterProvider = ({ children }) => {
     const { tasks } = useAPI();
     const [selectedFilters, setSelectedFilters] = useState({
@@ -18,8 +18,28 @@ export const FilterProvider = ({ children }) => {
         priorities: [],
         employee: null
     });
+    const [filteredTasks, setFilteredTasks] = useState([]);
     const [selectedDropdown, setSelectedDropdown] = useState('');
 
+    useEffect(() => {
+        if (!hasFilters) {
+            setFilteredTasks(tasks);
+            return;
+        } else {
+            let filtered = tasks.filter(task => {
+                const employeeMatch = selectedFilters.employee === null ||
+                    selectedFilters.employee.id === task.employee.id
+                const priorityMatch = selectedFilters.priorities.length === 0 ||
+                    selectedFilters.priorities.some(priority => priority.id == task.priority.id);
+                const departmentMatch = selectedFilters.departments.length === 0 ||
+                    selectedFilters.departments.some(department => department.id == task.department.id)
+                return employeeMatch && priorityMatch && departmentMatch
+            })
+            setFilteredTasks(filtered);
+            return;
+        }
+
+    }, [selectedFilters, tasks])
     const toggleDropdown = dropdown => {
         if (selectedDropdown === dropdown) {
             setSelectedDropdown('');
@@ -28,7 +48,6 @@ export const FilterProvider = ({ children }) => {
             setSelectedDropdown(dropdown);
         }
     }
-
 
     const updateDepartmentFilters = departments => {
         setSelectedFilters({
@@ -69,6 +88,7 @@ export const FilterProvider = ({ children }) => {
         selectedFilters.employee !== null;
 
     const value = {
+        filteredTasks,
         selectedFilters,
         selectedDropdown,
         hasFilters,

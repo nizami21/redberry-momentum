@@ -67,6 +67,9 @@ const SingleSelectDropdown = ({ options, isOpen, onClose, onSelect, selectedOpti
                                     </div>
                                 </motion.div>
                             ))}
+                            {options.length == 0 && (
+                                <h1 className="font-firaGo text-lg text-center font-bold">შექმენით თანამშრომელი</h1>
+                            )}
                         </div>
                         <motion.button
                             className={`self-end w-[155px] h-[35px] text-white rounded-[20px] mt-6 ${selected ? 'bg-purple hover:bg-purple-light' : 'bg-gray-400 cursor-not-allowed'

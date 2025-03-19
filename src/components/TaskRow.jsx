@@ -2,9 +2,16 @@ import { getStatusColor } from "@/hooks/getStatusColor";
 import { motion } from 'framer-motion';
 import TaskCard from "./TaskCard";
 import StatusName from "./SatusName";
+import { useFilter } from "@/contexts/FilterProvider";
+import { useEffect, useState } from "react";
 
-const TaskRow = ({ status, tasks }) => {
-    const filteredTasks = tasks.filter(task => task.status.id === status.id);
+const TaskRow = ({ status }) => {
+    const { filteredTasks } = useFilter();
+    const [filteredTasksByStatus, setFilteredTasksByStatus] = useState([]);
+
+    useEffect(() => {
+        setFilteredTasksByStatus(filteredTasks.filter(filteredTasks => filteredTasks.status.id === status.id))
+    }, [filteredTasks])
 
     const containerVariants = {
         hidden: { opacity: 0 },
@@ -37,7 +44,7 @@ const TaskRow = ({ status, tasks }) => {
                 initial="hidden"
                 animate="visible"
             >
-                {filteredTasks.map(task => (
+                {filteredTasksByStatus.map(task => (
                     <motion.div key={task.id} variants={itemVariants}>
                         <TaskCard task={task} color={getStatusColor(status)} />
                     </motion.div>

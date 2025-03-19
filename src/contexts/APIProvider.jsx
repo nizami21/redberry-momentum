@@ -4,6 +4,7 @@ import React, { createContext, useContext, useEffect, useState } from 'react';
 const APIContext = createContext();
 
 export const APIProvider = ({ children }) => {
+    const [loading, setLoading] = useState(false)
     const [statuses, setStatuses] = useState([]);
     const [priorities, setPriorities] = useState([]);
     const [departments, setDepartments] = useState([]);
@@ -11,6 +12,7 @@ export const APIProvider = ({ children }) => {
     const [tasks, setTasks] = useState([]);
 
     useEffect(() => {
+        setLoading(true);
         fetchData();
     }, [])
     const fetchData = async () => {
@@ -26,6 +28,7 @@ export const APIProvider = ({ children }) => {
         setDepartments(departments.data);
         setTasks(tasks.data);
         setEmployees(employees.data);
+        setLoading(false);
     }
 
 
@@ -35,6 +38,7 @@ export const APIProvider = ({ children }) => {
         departments,
         tasks,
         employees,
+        loading,
         fetchData
     }
     return (
