@@ -10,18 +10,21 @@ import TaskInnerPage from '/src/pages/TaskInnerPage'
 import Page404 from '/src/pages/Page404'
 import { APIProvider } from './contexts/APIProvider'
 import FilterProvider from './contexts/FilterProvider'
+import { ModalProvider } from './contexts/ModalProvider'
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
     <BrowserRouter>
       <APIProvider>
         <FilterProvider>
-          <Routes>
-            <Route path='/' element={<TasksPage />} />
-            <Route path='/create' element={<TaskCreationPage />} />
-            <Route path='task/:id' element={<TaskInnerPage />} />
-            <Route path='*' element={<Page404 />} />
-          </Routes>
+          <ModalProvider>
+            <Routes>
+              <Route path='/' element={<TasksPage />} />
+              <Route path='/create' element={<TaskCreationPage />} />
+              <Route path='task/:id' element={<TaskInnerPage />} />
+              <Route path='*' element={<Page404 />} />
+            </Routes>
+          </ModalProvider>
         </FilterProvider>
       </APIProvider>
     </BrowserRouter>
