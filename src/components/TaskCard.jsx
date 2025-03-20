@@ -1,6 +1,7 @@
 import { getDepartmentColor } from '@/hooks/getDepartmentColor';
 import { getPriorityColor } from '@/hooks/getPriorityColor';
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 
 const Priority = ({ priority, color }) => {
 
@@ -29,14 +30,13 @@ const Department = ({ department }) => {
     )
 }
 const TaskCard = ({ task, color }) => {
+    const navigate = useNavigate()
     const formatDate = (dateString) => {
         const date = new Date(dateString);
         return `${date.getDate()} ${date.toLocaleString('Ka-ge', { month: 'short' })}, ${date.getFullYear()}`;
     };
-
     return (
-        <div className={`flex h-full bg-white select-none flex-col rounded-2xl font-firaGO border-[1px] p-5 w-full gap-[28px]`} style={{ borderColor: color }}>
-            {/* Priority */}
+        <div onClick={() => navigate(`/task/${task.id}`)} className={`flex h-full cursor-pointer hover:shadow-xl transition-all duration-200 delay-75 bg-white select-none flex-col rounded-2xl font-firaGO border-[1px] p-5 w-full gap-[28px]`} style={{ borderColor: color }}>
 
             <div className="flex justify-between items-center">
                 <div className='flex gap-2.5'>
@@ -55,8 +55,7 @@ const TaskCard = ({ task, color }) => {
 
             <div className='flex items-center justify-between'>
                 <div>
-                    {/* <img src={task.employee.avatar} alt="avatar" /> */}
-                    <div className='rounded-full bg-gray-400 w-[31px] h-[31px]'></div>
+                    <img src={task.employee.avatar} className='rounded-full w-[31px] h-[31px]' alt="avatar" />
                 </div>
                 <div className='flex gap-1'>
                     <img src="/src/assets/img/Comments.svg" alt="coment icon" />
