@@ -112,7 +112,7 @@ const EmployeeCreationModal = ({ isOpen = false, onClose }) => {
         <AnimatePresence>
             {isOpen && (
                 <motion.div
-                    className="modal-overlay fixed inset-0 flex justify-center items-start pt-20 bg-black/30 backdrop-blur-sm z-50"
+                    className="modal-overlay select-none fixed inset-0 flex justify-center items-start pt-20 bg-black/30 backdrop-blur-sm z-50"
                     onClick={handleOutsideClick}
                     initial={{ opacity: 0 }}
                     animate={{ opacity: 1 }}

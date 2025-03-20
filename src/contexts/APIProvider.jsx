@@ -7,22 +7,13 @@ const APIContext = createContext();
 const Alert = ({ message, onClose }) => {
     return (
         <motion.div
-            className="fixed top-4 left-1/2 transform -translate-x-1/2 z-50 bg-white rounded-md shadow-lg border border-gray-200 px-4 py-3 flex items-center"
+            className="fixed top-4 left-1/2 transform -translate-x-1/2 z-50 bg-white rounded-[10px] border border-purple px-4 py-3 flex items-center"
             initial={{ y: -100, opacity: 0 }}
             animate={{ y: 0, opacity: 1 }}
             exit={{ y: -100, opacity: 0 }}
             transition={{ duration: 0.3 }}
         >
-            <div className="text-gray-700">{message}</div>
-            <button
-                onClick={onClose}
-                className="ml-4 text-gray-400 hover:text-gray-600"
-            >
-                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                    <line x1="18" y1="6" x2="6" y2="18"></line>
-                    <line x1="6" y1="6" x2="18" y2="18"></line>
-                </svg>
-            </button>
+            <div className="text-gray-dark font-firaGo font-semibold text-lg">{message}</div>
         </motion.div>
     );
 };

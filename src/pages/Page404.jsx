@@ -4,7 +4,7 @@ import Header from '../components/Header';
 
 const Page404 = () => {
     return (
-        <div className='w-full h-screen bg-gray-100 flex flex-col'>
+        <div className='w-screen h-screen bg-white flex flex-col'>
             <Header />
             <div className='flex-1 flex flex-col items-center justify-center gap-6 pb-40'>
                 <h1 className='text-7xl font-fredokaOne animate-pulse'>404</h1>
