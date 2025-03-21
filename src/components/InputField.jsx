@@ -8,7 +8,8 @@ const FormInputField = ({
     maxLength = 255,
     required = true,
     onChange,
-    debounceTime = 100
+    debounceTime = 100,
+    allowSpaces = false  // New property to control space handling
 }) => {
     const [value, setValue] = useState(initialValue);
     const [debouncedValue, setDebouncedValue] = useState(initialValue);
@@ -19,11 +20,17 @@ const FormInputField = ({
         (!required || debouncedValue.trim() !== '');
 
     const handleInputChange = (e) => {
-        const trimmedValue = e.target.value.trim();
+        const inputValue = e.target.value;
 
-        const charactersOnly = trimmedValue.replace(/[^\p{L}]/gu, '');
-
-        setValue(charactersOnly);
+        if (allowSpaces) {
+            // If spaces are allowed, use the input value directly
+            setValue(inputValue);
+        } else {
+            // If spaces are not allowed, apply the regex to remove non-letter characters
+            const trimmedValue = inputValue.trim();
+            const charactersOnly = trimmedValue.replace(/[^\p{L}]/gu, '');
+            setValue(charactersOnly);
+        }
     };
 
     useEffect(() => {
@@ -67,13 +74,11 @@ const FormInputField = ({
                 onChange={handleInputChange}
                 className={`bg-white w-full h-[42px] outline-0 p-2.5 border-[1px] rounded-md mb-1.5 ${debouncedValue && !isValid ? 'border-red' : 'border-gray'}`}
             />
-
             <div>
                 <div className="flex items-center gap-0.5">
                     <Check color={debouncedValue === "" ? "#6C757D" : (isValid ? "#08A508" : "#FA4D4D")} />
                     <span className={`font-firaGo text-xs ${debouncedValue === '' ? 'text-gray-light' : (isValid ? 'text-green' : 'text-red')}`}>მინიმუმ {minLength} სიმბოლო</span>
                 </div>
-
                 <div className="flex items-center gap-0.5">
                     <Check color={debouncedValue === "" ? "#6C757D" : (isValid ? "#08A508" : "#FA4D4D")} />
                     <span className={`font-firaGo text-xs ${debouncedValue === '' ? 'text-gray-light' : (isValid ? 'text-green' : 'text-red')}`}>მაქსიმუმ {maxLength} სიმბოლო</span>

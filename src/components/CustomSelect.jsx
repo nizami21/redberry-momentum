@@ -124,6 +124,7 @@ const CustomSelect = ({
                                             className="px-4 py-3 text-sm cursor-pointer hover:bg-gray-50"
                                             onClick={() => handleSelect(option)}
                                         >
+
                                             {option.name}
                                         </motion.li>
                                     ))

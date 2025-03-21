@@ -24,7 +24,7 @@ const TaskCard = ({ task, color }) => {
             <div className='flex flex-col gap-3'>
                 <h3 className="font-bold text-[15px] text-ourBlack">{task.name}</h3>
                 <p className="text-sm font-normal text-ourBlack-light">
-                    {task.description.length > 100 ? `${task.description.substring(0, 100)}...` : task.description}
+                    {task.description && (task.description.length > 100 ? `${task.description.substring(0, 100)}...` : task.description)}
                 </p>
             </div>
 

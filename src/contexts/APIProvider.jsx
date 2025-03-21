@@ -159,7 +159,17 @@ export const APIProvider = ({ children }) => {
             showAlert(message, 5000);
         }
     };
-
+    const createTask = async (formData) => {
+        try {
+            const response = await axiosInstance.post('/tasks', formData);
+            showAlert('დავალება წარმატებით შეიქმნა', 3000);
+            return response.data;
+        } catch (error) {
+            console.error('Task creation error:', error);
+            showAlert('დავალება ვერ შეიქმნა', 3000);
+            throw error; // Re-throw so the component can handle it
+        }
+    }
     const apiValues = {
         statuses,
         priorities,
@@ -173,7 +183,8 @@ export const APIProvider = ({ children }) => {
         fetchComments,
         createEmployee,
         updateTaskStatus,
-        showAlert
+        showAlert,
+        createTask
     };
 
     return (
