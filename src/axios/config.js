@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 
-const API_KEY = '9e6e419b-ff05-442b-8587-7fb9c5d97741';
+const API_KEY = '9e7c5ffa-c54e-49d5-adc8-402887b80386';
 const API_URL = 'https://momentum.redberryinternship.ge/api';
 
 const axiosInstance = axios.create({
