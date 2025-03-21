@@ -25,6 +25,7 @@ export const APIProvider = ({ children }) => {
     const [priorities, setPriorities] = useState([]);
     const [departments, setDepartments] = useState([]);
     const [employees, setEmployees] = useState([]);
+    const [comments, setComments] = useState([]);
     const [tasks, setTasks] = useState([]);
 
     const [alerts, setAlerts] = useState([]);
@@ -71,7 +72,51 @@ export const APIProvider = ({ children }) => {
             console.error('Error fetching data:', error);
         }
     };
+    const fetchTask = async (id) => {
+        try {
+            const response = await axiosInstance.get(`/tasks/${id}`);
+            return response.data;
+        } catch (error) {
+            setLoading(false);
+            showAlert('მონაცემების ჩატვირთვა ვერ მოხერხდა', 5000);
+            console.error('Error fetching task data:', error);
+            return null;
+        }
+    }
+    const fetchComments = async (id) => {
+        try {
+            const response = await axiosInstance.get(`/tasks/${id}/comments`);
+            return response.data;
 
+        } catch (error) {
+            setLoading(false);
+            showAlert('მონაცემების ჩატვირთვა ვერ მოხერხდა', 5000);
+            console.error('Error fetching task data:', error);
+            return null;
+        }
+    }
+    const addComment = async (id, text, employeeId) => {
+        try {
+            await axiosInstance.post(`/tasks/${id}/comments`, {
+                'text': text,
+                'partner_id': employeeId
+            });
+
+        } catch (error) {
+            setLoading(false);
+            showAlert('კომენტარის შენახვა ვერ მოხერხდა', 5000);
+            return null;
+        }
+    }
+    const updateTaskStatus = async (id, statusId) => {
+        try {
+            await axiosInstance.put(`/tasks/${id}`, {
+                'status_id': statusId
+            })
+        } catch (error) {
+            showAlert('სტატუსის შეცვლა ვერ მოხერხდა')
+        }
+    }
     const createEmployee = async (formData) => {
         try {
             const formDataToSend = new FormData();
@@ -123,7 +168,11 @@ export const APIProvider = ({ children }) => {
         employees,
         loading,
         fetchData,
+        fetchTask,
+        addComment,
+        fetchComments,
         createEmployee,
+        updateTaskStatus,
         showAlert
     };
 

@@ -5,11 +5,15 @@ import FilterBar from "@/components/FilterBar";
 import TaskRow from "@/components/TaskRow";
 import { useFilter } from "@/contexts/FilterProvider";
 import Button from "@/components/Button";
+import Loader from "@/components/Loader";
+import { useEffect } from "react";
 
 const TaskPage = () => {
-    const { statuses, departments, priorities, loading } = useAPI();
+    const { statuses, departments, priorities, loading, fetchData } = useAPI();
     const { filteredTasks, hasFilters, clearAllFilters } = useFilter();
-
+    useEffect(() => {
+        fetchData()
+    }, [])
     const containerVariants = {
         hidden: { opacity: 0 },
         visible: {
@@ -36,17 +40,7 @@ const TaskPage = () => {
         return (
             <div className="select-none bg-white min-h-screen">
                 <Header />
-                <div className="w-full flex items-center justify-center h-screen pb-40">
-                    <motion.div
-                        initial={{ opacity: 0 }}
-                        animate={{ opacity: 1 }}
-                        transition={{ duration: 0.5 }}
-                        className="font-firaGO text-xl text-gray-600 flex flex-col items-center gap-16"
-                    >
-                        <img src="/src/assets/img/Hourglass.svg" alt="Hourglass" className="w-24 h-24 animate-spin" />
-                        <h1 className="font-fredokaOne text-2xl font-bold animate-pulse">მონაცემების ჩატვირთვა</h1>
-                    </motion.div>
-                </div>
+                <Loader />
             </div>
         );
     }

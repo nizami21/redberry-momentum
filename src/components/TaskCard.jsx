@@ -1,42 +1,17 @@
-import { getDepartmentColor } from '@/hooks/getDepartmentColor';
-import { getPriorityColor } from '@/hooks/getPriorityColor';
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
+import Priority from './Priority';
+import Department from './Departments';
+import { formatDate } from '@/hooks/formatDate';
 
-const Priority = ({ priority, color }) => {
-
-    return (
-        <div className="flex items-center h-[26px] rounded-[4px] p-1 gap-1 border-[1px]" style={{ borderColor: getPriorityColor(priority.id), color: color }}>
-            <img src={priority.icon} alt={priority.name} />
-            <span className="font-firaGO font-medium text-xs" style={{ color: getPriorityColor(priority.id) }}>{priority.name}</span>
-        </div>
-    )
-}
-const Department = ({ department }) => {
-
-    const shortenDepartmentName = (name) => {
-        if (name.length <= 10) {
-            return name;
-        }
-        return name.split(' ').map(word => word.substring(0, 2)).join('.');
-    };
-
-    return (
-        <div className="flex items-center py-[5px] px-[10px] max-w-[90px] h-[26px] gap-2 rounded-[15px]"
-            style={{ backgroundColor: getDepartmentColor(department.id) }}
-            title={department.name}>
-            <span className='font-firaGO font-normal text-xs text-white'>{shortenDepartmentName(department.name)}</span>
-        </div>
-    )
-}
 const TaskCard = ({ task, color }) => {
     const navigate = useNavigate()
-    const formatDate = (dateString) => {
-        const date = new Date(dateString);
-        return `${date.getDate()} ${date.toLocaleString('Ka-ge', { month: 'short' })}, ${date.getFullYear()}`;
-    };
     return (
-        <div onClick={() => navigate(`/task/${task.id}`)} className={`flex h-full cursor-pointer hover:shadow-xl transition-all duration-200 delay-75 bg-white select-none flex-col rounded-2xl font-firaGO border-[1px] p-5 w-full gap-[28px]`} style={{ borderColor: color }}>
+        <div onClick={() => navigate(`/task/${task.id}`, {
+            state: {
+                taskId: task.id
+            }
+        })} className={`flex h-full cursor-pointer hover:shadow-xl transition-all duration-200 delay-75 bg-white select-none flex-col rounded-2xl font-firaGO border-[1px] p-5 w-full gap-[28px]`} style={{ borderColor: color }}>
 
             <div className="flex justify-between items-center">
                 <div className='flex gap-2.5'>
@@ -59,7 +34,7 @@ const TaskCard = ({ task, color }) => {
                 </div>
                 <div className='flex gap-1'>
                     <img src="/src/assets/img/Comments.svg" alt="coment icon" />
-                    <span className='text-ourBlack text-sm font-normal'>0</span>
+                    <span className='text-ourBlack text-sm font-normal'>{task.total_comments}</span>
                 </div>
             </div>
         </div>
