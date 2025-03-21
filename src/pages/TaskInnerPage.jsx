@@ -9,6 +9,10 @@ import Department from "@/components/Departments";
 import CustomSelect from "@/components/CustomSelect";
 import { formatToGeorgianDate } from "@/hooks/formatToGEDate";
 
+import pieChartIcon from "@/assets/img/pie-chart.svg";
+import personIcon from "@/assets/img/person.svg";
+import calendarIcon from "@/assets/img/calendar.svg";
+
 const TaskInnerPage = () => {
     const [task, setTask] = useState(null);
     const [comments, setComments] = useState([]);
@@ -154,7 +158,7 @@ const TaskInnerPage = () => {
                         <h1 className="mb-[18px] font-firaGO text-2xl font-medium text-[#2A2A2A]">დავალების დეტალები</h1>
                         <div className="w-[493px] grid grid-cols-2 gap-8">
                             <div className="flex gap-1.5 items-center">
-                                <img src="/src/assets/img/pie-chart.svg" alt="pie chart icon" className="w-[24px] h-[24px]" />
+                                <img src={pieChartIcon} alt="pie chart icon" className="w-[24px] h-[24px]" />
                                 <span className="font-firaGO text-base font-normal text-gray-idk">სტატუსი</span>
                             </div>
                             <CustomSelect
@@ -164,7 +168,7 @@ const TaskInnerPage = () => {
                                 value={task.status.id}
                             />
                             <div className="flex gap-1.5 items-center">
-                                <img src="/src/assets/img/person.svg" alt="pie chart icon" className="w-[24px] h-[24px] mb-1" />
+                                <img src={personIcon} alt="pie chart icon" className="w-[24px] h-[24px] mb-1" />
                                 <span className="font-firaGO text-base font-normal text-gray-idk">თანამშრომელი</span>
                             </div>
                             <div className="flex gap-3 items-center">
@@ -175,7 +179,7 @@ const TaskInnerPage = () => {
                                 </div>
                             </div>
                             <div className="flex gap-1.5 items-center">
-                                <img src="/src/assets/img/calendar.svg" alt="pie chart icon" className="w-[24px] h-[24px]" />
+                                <img src={calendarIcon} alt="pie chart icon" className="w-[24px] h-[24px]" />
                                 <span className="font-firaGO text-base font-normal text-gray-idk">დავალების ვადა</span>
                             </div>
                             <div className="flex gap-1.5 items-center">

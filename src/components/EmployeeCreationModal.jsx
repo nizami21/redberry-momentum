@@ -4,6 +4,8 @@ import { motion, AnimatePresence } from "framer-motion";
 import FormInputField from "./InputField";
 import { useAPI } from "@/contexts/APIProvider";
 import CustomSelect from "./CustomSelect";
+import XIconRound from '@/assets/img/XIconRound.svg';
+import photoUploadIcon from '@/assets/img/photoUpload.svg';
 
 const EmployeeCreationModal = ({ isOpen = false, onClose }) => {
     const { departments, createEmployee } = useAPI();
@@ -132,7 +134,7 @@ const EmployeeCreationModal = ({ isOpen = false, onClose }) => {
                         }}
                     >
                         <div className="w-full flex items-center justify-end">
-                            <img src="/src/assets/img/XIconRound.svg" alt="close icon" className="cursor-pointer" onClick={handleClose} />
+                            <img src={XIconRound} alt="close icon" className="cursor-pointer" onClick={handleClose} />
                         </div>
                         {/* content */}
                         <div className="w-full h-full flex flex-col items-center gap-[45px]">
@@ -169,7 +171,7 @@ const EmployeeCreationModal = ({ isOpen = false, onClose }) => {
                                             htmlFor="image-upload"
                                             className="cursor-pointer h-full w-full flex flex-col justify-center items-center font-firaGO font-normal text-sm"
                                         >
-                                            <img src="/src/assets/img/photoUpload.svg" alt="upload photo icon" />
+                                            <img src={photoUploadIcon} alt="upload photo icon" />
                                             ატვირთე ფოტო
                                         </label>
                                     ) : (

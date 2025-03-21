@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import Priority from './Priority';
 import Department from './Departments';
 import { formatDate } from '@/hooks/formatDate';
+import commentIcon from '@/assets/img/Comments.svg';
 
 const TaskCard = ({ task, color }) => {
     const navigate = useNavigate()
@@ -33,7 +34,7 @@ const TaskCard = ({ task, color }) => {
                     <img src={task.employee.avatar} className='rounded-full w-[31px] h-[31px]' alt="avatar" />
                 </div>
                 <div className='flex gap-1'>
-                    <img src="/src/assets/img/Comments.svg" alt="coment icon" />
+                    <img src={commentIcon} alt="coment icon" />
                     <span className='text-ourBlack text-sm font-normal'>{task.total_comments}</span>
                 </div>
             </div>
